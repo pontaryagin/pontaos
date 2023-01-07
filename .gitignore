@@ -1,0 +1,6 @@
+*.elf
+*.o
+.old.*
+git
+disk.img
+*.efi
