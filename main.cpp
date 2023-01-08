@@ -47,10 +47,5 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
       WritePixel(frame_buffer_config, 100+x, 100+y, {0,255,0});
     }
   }
-  // auto frame_buffer = reinterpret_cast<uint8_t*>(frame_buffer_base);
-  // for(uint64_t i =0; i < frame_buffer_size; ++i)
-  // {
-  //   frame_buffer[i] = i%256;
-  // }
   while (1) __asm__("hlt");
 }
