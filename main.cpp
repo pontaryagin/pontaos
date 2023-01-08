@@ -96,6 +96,38 @@ int WritePixel(const FrameBufferConfig& config,
   return 0;
 }
 
+const uint8_t kFontA[16] = {
+  0b00000000, //
+  0b00011000, //    **
+  0b00011000, //    **
+  0b00011000, //    **
+  0b00011000, //    **
+  0b00100100, //   *  *
+  0b00100100, //   *  *
+  0b00100100, //   *  *
+  0b00100100, //   *  *
+  0b01111110, //  ******
+  0b01000010, //  *    *
+  0b01000010, //  *    *
+  0b01000010, //  *    *
+  0b11100111, // ***  ***
+  0b00000000, //
+  0b00000000, //
+};
+
+void WriteAscii(PixelWriter& pixel_writer, int x, int y, char c, const PixelColor& color)
+{
+  for(int dx =0, x_max = sizeof(kFontA[0])*8; dx < x_max; ++dx)
+  {
+    for (int dy =0; dy < std::size(kFontA); ++dy)
+    {
+      if (kFontA[dy] >> (x_max-dx) & 1){
+        pixel_writer.Write(x+dx, y+dy, color);
+      }
+    }
+  }
+}
+
 extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
 {
   const auto pixel_writer = getPixelWrite(frame_buffer_config);
@@ -109,5 +141,7 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
       pixel_writer->Write(100+x, 100+y, {0,255,0});
     }
   }
+  WriteAscii(*pixel_writer, 50, 50, 'A', {0, 0, 0});
+  WriteAscii(*pixel_writer, 58, 50, 'A', {0, 0, 0});
   while (1) __asm__("hlt");
 }

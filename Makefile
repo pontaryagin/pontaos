@@ -12,7 +12,7 @@ setup_edk2:
 	if [ ! -e edk2/MikanLoaderPkg ]; then ln -s $HOME/mikanos/MikanLoaderPkg edk2/MikanLoaderPkg ; fi
 
 main.o: main.cpp
-	clang++ $(CPPFLAGS) $(CPPFLAGS_EXTRA) -O2 -Wall -g --target=x86_64-elf -ffreestanding -mno-red-zone \
+	clang++ $(CPPFLAGS) $(CPPFLAGS_EXTRA) -O0 -Wall -g --target=x86_64-elf -ffreestanding -mno-red-zone \
 		-fno-exceptions -fno-rtti -std=c++17 -c main.cpp
 
 kernel.elf: main.o
