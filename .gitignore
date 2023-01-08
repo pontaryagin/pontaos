@@ -4,3 +4,4 @@
 git
 disk.img
 *.efi
+/x86_64-elf
